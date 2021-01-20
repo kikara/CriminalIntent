@@ -40,4 +40,5 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$appcompat_version"
     def lifecycle_version = "2.2.0"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    implementation "androidx.recyclerview:recyclerview:1.1.0"
 }
