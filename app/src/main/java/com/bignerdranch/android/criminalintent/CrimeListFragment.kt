@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -62,9 +63,10 @@ class CrimeListFragment: Fragment() {
         :RecyclerView.ViewHolder(view), View.OnClickListener {
 
         private lateinit var crime: Crime
-//    Ссылки на текстовые представления
+//    Ссылки на представления
         private val titleTextView: TextView = itemView.findViewById(R.id.crime_title) as TextView
         private val dateTextView: TextView = itemView.findViewById(R.id.crime_date) as TextView
+        private val solvedImageView: ImageView = itemView.findViewById(R.id.crime_solved) as ImageView
 
         init {
             itemView.setOnClickListener(this)
@@ -73,6 +75,11 @@ class CrimeListFragment: Fragment() {
             this.crime = crime
             titleTextView.text = this.crime.title
             dateTextView.text = this.crime.date.toString()
+            solvedImageView.visibility = if(crime.isSolved) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
         }
 //        Обработка нажатий
         override fun onClick(v: View?) {
