@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.Room
 import com.bignerdranch.android.criminalintent.database.CrimeDataBase
 import java.util.*
+import java.util.concurrent.Executors
 
 /*
     Предоставляет прописать API для работы с БД через DAO
@@ -28,6 +29,8 @@ class CrimeRepository private constructor(context: Context) {
         }
     }
 
+    private val executor = Executors.newSingleThreadExecutor()
+
 //    Создаем конкретную реализацию абстрактного класса CrimeDatabase
     private val database: CrimeDataBase = Room.databaseBuilder(
             context.applicationContext,
@@ -41,7 +44,17 @@ class CrimeRepository private constructor(context: Context) {
 
     fun getCrime(id: UUID): LiveData<Crime?> = crimeDao.getCrime(id)
 
+    fun updateCrime(crime: Crime) {
+        executor.execute {
+            crimeDao.updateCrime(crime)
+        }
+    }
 
+    fun addCrime(crime:Crime) {
+        executor.execute {
+            crimeDao.addCrime(crime)
+        }
+    }
 
 
 }

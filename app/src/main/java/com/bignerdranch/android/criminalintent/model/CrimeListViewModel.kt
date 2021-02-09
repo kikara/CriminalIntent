@@ -1,6 +1,7 @@
-package com.bignerdranch.android.criminalintent
+package com.bignerdranch.android.criminalintent.model
 
 import androidx.lifecycle.ViewModel
+import com.bignerdranch.android.criminalintent.CrimeRepository
 
 /*
     ViewModel объект позволяет сохранять данные UI при изменении конфигурации приложения
