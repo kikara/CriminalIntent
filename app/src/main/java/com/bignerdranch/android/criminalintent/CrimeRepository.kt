@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.Room
 import com.bignerdranch.android.criminalintent.database.CrimeDataBase
 import com.bignerdranch.android.criminalintent.database.migration_1_2
+import java.io.File
 import java.util.*
 import java.util.concurrent.Executors
 
@@ -29,8 +30,10 @@ class CrimeRepository private constructor(context: Context) {
             throw IllegalStateException("CrimeRepository must be initialized")
         }
     }
-
+//  Исполнитель, выполняет задачи в отдельном потоке
     private val executor = Executors.newSingleThreadExecutor()
+    private val filesDir = context.applicationContext.filesDir
+
 
 //    Создаем конкретную реализацию абстрактного класса CrimeDatabase
     private val database: CrimeDataBase = Room.databaseBuilder(
@@ -41,6 +44,7 @@ class CrimeRepository private constructor(context: Context) {
 //    Реализация функция DAO
     private val crimeDao = database.crimeDao()
 
+//    API для работы с БД
     fun getCrimes(): LiveData<List<Crime>> = crimeDao.getCrimes()
 
     fun getCrime(id: UUID): LiveData<Crime?> = crimeDao.getCrime(id)
@@ -56,6 +60,8 @@ class CrimeRepository private constructor(context: Context) {
             crimeDao.addCrime(crime)
         }
     }
+
+    fun getPhotoFile(crime: Crime): File = File(filesDir, crime.photoFileName)
 
 
 }
